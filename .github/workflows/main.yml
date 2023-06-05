@@ -19,14 +19,11 @@ jobs:
       - name: Download a file
         run: curl -L -o "Developer Salary Survey${{ steps.date.outputs.date }}.xlsx" https://docs.google.com/spreadsheets/d/11OrbJjxKWXm9qZUmLi0zuWvOAhW4CSflWZYb5EVgve4/export?format=xlsx&id=11OrbJjxKWXm9qZUmLi0zuWvOAhW4CSflWZYb5EVgve4
  
-      - name: commit files
+      - name: commit files and push
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -A
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "Add downloaded file"
+          git push origin main
           
-      - name: push changes
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main 
