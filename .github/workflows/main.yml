@@ -19,11 +19,27 @@ jobs:
       - name: Download a file
         run: curl -L -o "Developer Salary Survey${{ steps.date.outputs.date }}.xlsx" https://docs.google.com/spreadsheets/d/11OrbJjxKWXm9qZUmLi0zuWvOAhW4CSflWZYb5EVgve4/export?format=xlsx&id=11OrbJjxKWXm9qZUmLi0zuWvOAhW4CSflWZYb5EVgve4
  
-      - name: commit files and push
+      - name: Set up Git
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
+          git checkout -b file-upload
           git add .
           git commit -m "Add downloaded file"
-          git push origin main
+          git push origin file-upload
+
+      - name: Create new file on main branch
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const fs = require('fs');
+            const content = fs.readFileSync("Developer Salary Survey${{ steps.date.outputs.date }}.xlsx", 'base64');
+            github.rest.repos.createOrUpdateFileContents({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              path: "Developer Salary Survey${{ steps.date.outputs.date }}.xlsx",
+              branch: 'main',
+              message: 'Add downloaded file',
+              content: content,
+            });
           
