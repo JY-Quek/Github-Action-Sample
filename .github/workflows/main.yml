@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2 # checkout the repository content to github runner
 
       - name: Download a file
-        run: curl -o Developer Salary Survey${{ steps.date.outputs.date }} https://docs.google.com/spreadsheets/d/11OrbJjxKWXm9qZUmLi0zuWvOAhW4CSflWZYb5EVgve4/export?format=xlsx&id=11OrbJjxKWXm9qZUmLi0zuWvOAhW4CSflWZYb5EVgve4
+        run: curl -L -o "Developer Salary Survey${{ steps.date.outputs.date }}.xlsx" https://docs.google.com/spreadsheets/d/11OrbJjxKWXm9qZUmLi0zuWvOAhW4CSflWZYb5EVgve4/export?format=xlsx&id=11OrbJjxKWXm9qZUmLi0zuWvOAhW4CSflWZYb5EVgve4
  
       - name: commit files
         run: |
